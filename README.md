@@ -12,4 +12,5 @@
 
 ### 使用：
 [茉莉机器人](http://www.itpk.cn/)
-[/Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
+
+[Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
