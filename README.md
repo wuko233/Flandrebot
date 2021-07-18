@@ -9,6 +9,7 @@
 + 主动发送消息 ×
 + 定时消息 ×
 ...
-###使用：
+
+### 使用：
 [茉莉机器人](http://www.itpk.cn/)
 [/Mrs4s/go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
