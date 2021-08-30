@@ -27,13 +27,21 @@ def send(type, id, msg, auto_escape=False):
         print(r.url)
         print(r)
 
-def at(qq, name = None):
+def at(qq, nickname = None):
     """
     at接口
     返回CQ码
     """
-    at = "[CQ:at,qq=" + str(qq) + ",name=" + name + "]"
+    at = "[CQ:at,qq=" + str(qq) + ",name=" + str(nickname) + "]"
     return at
+
+def poke(qq):
+    """
+    戳一戳接口
+    返回CQ码
+    """
+    poke = "[CQ:poke,qq=" + str(qq) + "]"
+    return poke
 
 def reply(text, uid, time, sqe):
     """
