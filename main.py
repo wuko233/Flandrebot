@@ -1,15 +1,15 @@
-import requests
+import json
 
 import plugins
 import ctrl
 
-return_group = 857326510 #主控群
-bot_master = 2338196179
-bot_id = 2604208757
-ml_api_key = "e87328122b090688177aec4a875af31a"
-ml_api_secret = "n70r5gbnfxsb"
+with open("./config.json")as config:
+    config_data = json.load(config)
+    main_group = config_data["user_data"]["control_groupid"]
+    bot_master = config_data["user_data"]["bot_masterid"]
+    bot_id = config_data["user_data"]["bot_id"]
 
-def handle(msg):
+def process_msg(msg):
     """处理消息"""
     try:
         if msg["post_type"] == "meta_event":
@@ -30,6 +30,7 @@ def handle(msg):
                 else:
                     online = "下线"
                 ctrl.send("p", bot_master, "您的机器人账户状态发生变化:\n类型：" + online + "\n详细信息:" + str(msg["client"]))
+                print("您的机器人账户状态发生变化:\n类型：" + online + "\n详细信息:" + str(msg["client"]))
             else:
                 ctrl.send("p", bot_master, "这是一个非文本消息：\n" + str(msg))
         elif msg["post_type"] == "message":
@@ -43,6 +44,7 @@ def handle(msg):
                         relation = 0
                     if all_msg(uid, new_msg) == False:
                         private_msg(uid, new_msg)
+                    print("收到私聊 来自" + str(uid) + ":" + new_msg)
                 elif msg["message_type"] == "group":  #群消息
                     new_msg = msg["message"]
                     gid = msg["group_id"]

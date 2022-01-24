@@ -1,7 +1,11 @@
+import requests
+import ctrl
 
-def moli():    
-    ml_api_key = "e87328122b090688177aec4a875af31a"
-    ml_api_secret = "n70r5gbnfxsb"
+ml_api_key = ""
+ml_api_secret = ""
+
+
+def moli(msg, uid, gid = 0, nickname = None):    
     url = "http://i.itpk.cn/api.php?api_key=" + ml_api_key + "&api_secret=" + ml_api_secret + "&question=" + msg
     r = requests.get(url)
     new_msg = r.text
@@ -11,3 +15,4 @@ def moli():
     else:
         remsg = ctrl.at(uid, nickname) + new_msg.replace("[user_name]", "你")
         ctrl.send("g", gid, remsg)
+    return 200

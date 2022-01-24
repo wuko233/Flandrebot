@@ -1,29 +1,29 @@
 import requests
+import json
 
-server_address = "http://192.168.0.100:5700/" #临时，未来放入配置文件
+with open("./config.json")as config:
+    config_data = json.load(config)
+    post_host = config_data["post_address"]["host"] + ":" + config_data["post_address"]["port"]
+
+
+
 """go-cqhttp自带接口"""
 def send(type, id, msg, auto_escape=False):
     """
     发送消息
-    type g(group群聊)或p(private私聊) id msg
+    type为g(group群聊)或p(private私聊) id msg
     auto_escape为是否使用CQ码
     """
     umsg = str(msg)
     uid = int(id)
     if type == "p":
-        k_v = {
-        "user_id" : uid,
-        "message" : umsg
-        }
-        r = requests.get(server_address + "send_private_msg", params = k_v)
+        k_v = {"user_id" : uid, "message" : umsg}
+        r = requests.get("http://" + post_host + "/send_private_msg", params = k_v)
         print(r.url)
         print(r)
     elif type == "g":
-        k_v = {
-        "group_id" : uid,
-        "message" : umsg
-        }
-        r = requests.get(server_address + "send_group_msg", params = k_v)
+        k_v = {"group_id" : uid, "message" : umsg}
+        r = requests.get("http://" + post_host + "/send_group_msg", params = k_v)
         print(r.url)
         print(r)
 
