@@ -24,6 +24,8 @@ def process_msg(msg):
                 else:
                     ctrl.send("g", msg["group_id"], ctrl.poke(uid))
                 pass
+            elif "sub_type" in msg and msg["sub_type"] == "poke":
+                pass
             elif msg["notice_type"] == "client_status": #登录状态
                 if msg["online"] == True:
                     online = "上线"
@@ -55,6 +57,7 @@ def process_msg(msg):
                     sex = msg["sender"]["sex"]
                     if all_msg(uid, new_msg, gid) == False:
                         group_msg(uid, new_msg, gid, nickname, sex)
+                    print("收到群聊消息 来自群" + str(gid) + "的" + str(uid) + ":" + new_msg + "\n")
         else:
             ctrl.send("p", bot_master, "无法判断的消息类型：\n" + msg)
     except Exception as error_log:
@@ -89,10 +92,18 @@ def group_msg(uid, msg, gid, nickname = None , sex = None):
     if msg[0] == "#":
         other_msg = msg[:0:-1]
         plugins.ml(other_msg, uid, gid, nickname)
+    elif msg == "菜单":
+        plugins.menu(msg, gid)
+    elif msg == "/about":
+        plugins.about_bot(uid, gid)
+    elif msg[4] == "原神签到":
+        ctrl.send("g", gid, "为保护您的隐私，请私聊操作！")
 
 def private_msg(uid, msg):
     """处理私聊消息"""
     if msg[:3] == "发消息":
         plugins.sudo_send_msg(uid, msg)
+    elif msg[:4] == "原神签到":
+        plugins.genshin_sign(uid, msg)
     else:
         plugins.ml(msg, uid)

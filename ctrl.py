@@ -27,6 +27,9 @@ def send(type, id, msg, auto_escape=False):
         print(r.url)
         print(r)
 
+def send_image(file):
+    pass
+
 def at(qq, nickname = None):
     """
     at接口
