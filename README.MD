@@ -1,4 +1,4 @@
-# Toby bot
+# Flandre bot
 
 ## 关于
 
