@@ -1,32 +1,34 @@
 import sys
 import json
-
 import ctrl
 
 sys.path.append(sys.path[0] + "/plugins/")
+
+import bot_schedule
+
 with open("./config.json")as config:
     config_data = json.load(config)
     main_group = config_data["user_data"]["control_groupid"]
     bot_master = config_data["user_data"]["bot_masterid"]
     bot_id = config_data["user_data"]["bot_id"]
 
-def keyword(msg, uid, gid = 0):
-    if msg[:4] == "发群消息" and uid == bot_master:
-        s = msg.split()
-        sgid = (s[1])
-        smsg = s[2]
-        sudo_send_gmsg(sgid, smsg)
-
-def about_bot(uid, gid = 0):
-    about = "你好！我是Toby。\n使用go-cqhttp，python编写。\n由wuko开发。" + "[CQ:image,file=https://imgtu.com/content/images/users/6p39O/av_1641632834.webp]"
-    ctrl.send("g", gid, about)
-
 def menu(msg, gid):
     """菜单"""
-    cd_msg = "菜单\n/hot\n/about\n原神签到\n--------\n目前处于开发状态"
+    cd_msg = "菜单\n/hot\n/about\n原神签到菜单\n--------\n目前处于开发状态"
     ctrl.send("g", gid, cd_msg)
 
 """QQ终端（测试）"""
+def sudo(msg, uid, gid = 0):
+    if uid == bot_master:
+        if msg[1:5] == "发群消息":
+            s = msg.split()
+            sgid = (s[1])
+            smsg = s[2]
+            sudo_send_gmsg(sgid, smsg)
+    else:
+        pass
+
+
 def sudo_send_msg(uid, msg):
     """主动发送消息"""
     if uid in bot_master:
@@ -64,9 +66,9 @@ def ml(msg, uid, gid = 0, nickname = None):
         import moli_bot
         moli_bot.moli(msg, uid, gid = 0, nickname = None)
     except ModuleNotFoundError as error_log:
-        print("未导入'bd_hot_list'")
+        print("未导入'moli_bot'")
         print(sys.path)
-        ctrl.send("p", bot_master, "错误：\n未导入'bd_hot_list'\n\n错误信息:" + str(repr(error_log)))
+        ctrl.send("p", bot_master, "错误：\n未导入'moli_bot'\n\n错误信息:" + str(repr(error_log)))
 
 def bd_hot(uid, gid = 0):
     try:

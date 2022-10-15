@@ -68,7 +68,6 @@ def read_write(route, content):
     """读写文件"""
     pass
 
-
 """处理消息"""
 def all_msg(uid, msg, gid = 0):
     """所有类型消息处理方法"""
@@ -89,14 +88,16 @@ def all_msg(uid, msg, gid = 0):
 
 def group_msg(uid, msg, gid, nickname = None , sex = None):
     """处理群消息"""
-    if msg[0] == "#":
+    if msg == "/start":
+        plugins.start(uid, gid)
+    elif msg[0] == "#":
         other_msg = msg[:0:-1]
         plugins.ml(other_msg, uid, gid, nickname)
     elif msg == "菜单":
         plugins.menu(msg, gid)
     elif msg == "/about":
         plugins.about_bot(uid, gid)
-    elif msg[4] == "原神签到":
+    elif msg[:4] == "原神签到":
         ctrl.send("g", gid, "为保护您的隐私，请私聊操作！")
 
 def private_msg(uid, msg):
@@ -106,4 +107,4 @@ def private_msg(uid, msg):
     elif msg[:4] == "原神签到":
         plugins.genshin_sign(uid, msg)
     else:
-        plugins.ml(msg, uid)
+        pass

@@ -5,8 +5,6 @@ with open("./config.json")as config:
     config_data = json.load(config)
     post_host = config_data["post_address"]["host"] + ":" + config_data["post_address"]["port"]
 
-
-
 """go-cqhttp自带接口"""
 def send(type, id, msg, auto_escape=False):
     """
