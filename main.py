@@ -1,4 +1,5 @@
 import json
+import random
 
 import plugins
 import ctrl
@@ -83,6 +84,8 @@ def all_msg(uid, msg, gid = 0):
             ctrl.send("g", gid, "？")
     elif msg == "/hot":
         plugins.bd_hot(uid, gid)
+    elif msg[:2] == "天气":
+        plugins.weather_plugin(uid, msg, gid)
     else:
         return False
 

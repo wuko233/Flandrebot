@@ -59,6 +59,14 @@ def genshin_sign(uid, msg):
         print(sys.path)
         ctrl.send("p", bot_master, "错误：\n未导入'genshin_sign'\n\n错误信息:" + str(repr(error_log)))
 
+def weather_plugin(uid, msg, gid=0):
+    try:
+        import weather
+        weather.handle(uid, msg, gid)
+    except ModuleNotFoundError as error_log:
+        print("未导入'weather'")
+        print(sys.path)
+        ctrl.send("p", bot_master, "错误：\n未导入'weather'\n\n错误信息:" + str(repr(error_log)))
 
 def ml(msg, uid, gid = 0, nickname = None):
     """调用茉莉机器人聊天接口"""
