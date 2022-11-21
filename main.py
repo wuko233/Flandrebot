@@ -1,14 +1,15 @@
-import json
-import random
+import configparser
 
 import plugins
 import ctrl
 
-with open("./config.json")as config:
-    config_data = json.load(config)
-    main_group = config_data["user_data"]["control_groupid"]
-    bot_master = config_data["user_data"]["bot_masterid"]
-    bot_id = config_data["user_data"]["bot_id"]
+config = configparser.ConfigParser()
+config.read("config.ini")
+main_group = int(config["User"]["main_group"])
+bot_master = config["User"]["master"]
+bot_id = int(config["User"]["bot_id"])
+bot_name = config["User"]["bot_name"]
+
 
 def process_msg(msg):
     """处理消息"""
@@ -24,11 +25,10 @@ def process_msg(msg):
                     ctrl.send("p", uid, ctrl.poke(uid))
                 else:
                     ctrl.send("g", msg["group_id"], ctrl.poke(uid))
-                pass
             elif "sub_type" in msg and msg["sub_type"] == "poke":
                 pass
             elif msg["notice_type"] == "client_status": #登录状态
-                if msg["online"] == True:
+                if msg["online"]: #== True
                     online = "上线"
                 else:
                     online = "下线"
@@ -56,7 +56,7 @@ def process_msg(msg):
                     role = msg["sender"]["role"]
                     nickname = msg["sender"]["nickname"]
                     sex = msg["sender"]["sex"]
-                    if all_msg(uid, new_msg, gid) == False:
+                    if all_msg(uid, new_msg, gid): #== False
                         group_msg(uid, new_msg, gid, nickname, sex)
                     print("收到群聊消息 来自群" + str(gid) + "的" + str(uid) + ":" + new_msg + "\n")
         else:
@@ -69,7 +69,7 @@ def read_write(route, content):
     """读写文件"""
     pass
 
-"""处理消息"""
+#处理消息
 def all_msg(uid, msg, gid = 0):
     """所有类型消息处理方法"""
     if "机器人" in msg:
@@ -95,7 +95,7 @@ def group_msg(uid, msg, gid, nickname = None , sex = None):
         plugins.start(uid, gid)
     elif msg[0] == "#":
         other_msg = msg[:0:-1]
-        plugins.ml(other_msg, uid, gid, nickname)
+        pass #plugins.ml(other_msg, uid, gid, nickname)
     elif msg == "菜单":
         plugins.menu(msg, gid)
     elif msg == "/about":
@@ -110,4 +110,4 @@ def private_msg(uid, msg):
     elif msg[:4] == "原神签到":
         plugins.genshin_sign(uid, msg)
     else:
-        pass
+        pass #plugins.ml(msg, uid)

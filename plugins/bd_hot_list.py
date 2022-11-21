@@ -12,4 +12,3 @@ def show():
         search_title = search_one.find(class_ = "c-single-text-ellipsis")
         text = text + search_title.text + "\n"
     return text
-    

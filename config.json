@@ -1,9 +1,0 @@
-{
-    "post_address": {"host": "192.168.0.100", "port": "5700"}, 
-    "get_address": {"host": "192.168.0.100", "port": "5701"},
-    "user_data": {
-                "control_groupid": 123456,
-                "bot_masterid": 2333333,
-                "bot_id": 260000000
-                }
-}

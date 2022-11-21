@@ -1,18 +1,14 @@
-#天气插件 接入和风天气开发者接口 开发中
-
 import requests
 import json
 import os
 import ctrl
 
-key = ""
-
-def __init__():
-    with open("./config.json", "a") as config:
-        data = json.loads(config)
-        if "weather_api_key" not in data:
-            data["weather_api_key"] = 0
-            print("[警告]已初始化天气插件，请在config.json中填写weather_api_key！\n获取key方式:和风天气开发者官网")
+#def __init__():
+#    with open("./config.json", "a") as config:
+#        data = json.loads(config)
+#        if "weather_api_key" not in data:
+#            data["weather_api_key"] = 0
+#            print("[警告]已初始化天气插件，请在config.json中填写weather_api_key！\n获取key方式:和风天气开发者官网")
 
 def handle(uid, msg, gid=0):
         if msg == "天气":
@@ -66,6 +62,8 @@ def look_up(location, adm= None):
         adm2 = res["location"][0]["country"]
         data = {"id": 200, "location_id": location_id, "adm1":adm1, "adm2":adm2}
         return data
+
+
 
 def now(location_id):
     """以整合文本形式返回当前时间该地区天气"""

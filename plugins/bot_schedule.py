@@ -7,7 +7,6 @@ import genshin_sign
 schedule.every().day.at("1:20").do(genshin_sign.sign_daily)
 
 
-
 def schedule_start():
     print("定时任务开始执行 at " + str(datetime.datetime.now()))
     while 1:

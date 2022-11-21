@@ -1,5 +1,7 @@
 # Flandre bot
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9be0bc5b84414df382bad502adaa8087)](https://www.codacy.com/gh/wuko233/Flandrebot/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wuko233/Flandrebot&amp;utm_campaign=Badge_Grade)
+
 ## 关于
 
 对接go-cqhttp，使用python编写。
@@ -8,19 +10,21 @@
 
 跪求提issue，一个人想不到太多。
 
-##### 仅用作个人学习
+仅用作个人学习
 
 功能列表:
 
 1. 基本Event处理 （未完全）
 
-2. ~~ 使用茉莉bot的聊天功能 ~~ (可能无法使用)
+2. ~~ 使用茉莉bot的聊天功能 ~~ (换接口了，正在重写)
 
 3. Genshin Impact签到功能
 
 4. 百度热搜功能
 
 5. 定时任务(实验中)
+
+6. 天气查询(未完成)
 
 ## 如何使用
 
@@ -32,27 +36,17 @@
 
 `git clone 本项目地址`
 
-### 2，编辑配置文件`config.json`
+### 2，编辑配置文件`config.ini`
 
-`vim config.json`
+先运行 start.py
+
+之后编辑配置文件
+
+`vim config.ini`
 
 ### 3，运行`start.py`
 
 `python start.py`
-
-## config文件说明
-
-`post_address`:向go-cqhttp发送数据的地址（go-cqhttp接受post的地址）
-
-`get_address`:go-cqhttp发送数据到的地址（接受go-cqhttp的Event的地址）
-
-`user_data`:用户数据
-
-`control_groupid`:用来测试bot的群聊群号
-
-`bot_masterid`:机器人主人QQ（用于接受bot错误信息）
-
-`bot_id`:机器人QQ
 
 ## 第三方库
 
@@ -61,6 +55,8 @@ requests
 schedule
 
 beautifulsoups
+
+configparser
 
 待续
 
