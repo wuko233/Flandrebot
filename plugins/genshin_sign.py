@@ -1,13 +1,13 @@
 import requests
-import bot_schedule
 import time
 import json
 import os
 import ctrl
 
+
 def sign_daily():
-    list = os.listdir("./plugins/d/genshin_sign")
-    for uid in list:
+    sign_list = os.listdir("./plugins/d/genshin_sign")
+    for uid in sign_list:
         sign = genshin_sign(uid)
         ctrl.send("p",uid, "定时签到任务成功，任务结果:\n" + sign)
         time.sleep(10)
@@ -32,8 +32,7 @@ def unbind(uid):
        ctrl.send("p", uid, "解绑失败，请联系开发者\n" + str(error_log))
 
 def genshin_sign(uid):
-    """str格式"""
-    if os.path.isfile("./plugins/d/genshin_sign/" + str(uid)) == False:
+    if os.path.isfile("./plugins/d/genshin_sign/" + str(uid)) is False:
         return 404
     else:
         with open("./plugins/d/genshin_sign/" + str(uid), "r") as f:
@@ -63,19 +62,23 @@ def genshin_sign(uid):
             pass
 
 def main(uid, msg):
-    if os.path.isdir('./plugins/d/genshin_sign') == False:
+    if os.path.isdir('./plugins/d/genshin_sign') is False:
         os.mkdir("./plugins/d/genshin_sign")
         print("创建目录成功")
     try:
         if msg == "原神签到":
             data = genshin_sign(uid)
             if data == 404:
-                ctrl.send("p", uid, "您未绑定您的cookies与HOYOVERSE通行证号码！请发送\n原神签到 绑定 [你的cookie_token] [你的MIHOYO通行id]\n绑定即代表您同意我们使用您的cookies进行签到，我们承诺您的账号信息安全！\n获取cookie_token方法：未完待续")
+                info = """您未绑定您的cookies与HOYOVERSE通行证号码！请发送
+                        原神签到 绑定 [你的cookie_token] [你的MIHOYO通行id]
+                        绑定即代表您同意我们使用您的cookies进行签到，我们承诺您的账号信息安全！
+                        获取cookie_token方法：未完待续"""
+                ctrl.send("p", uid, info)
             else:
                 ctrl.send("p", uid, data)
-        elif msg.split()[1] == "绑定":  
+        elif msg.split()[1] == "绑定":
             bind(uid, msg.split()[2], msg.split()[3])
-        elif msg.split()[1] == "解绑":  
+        elif msg.split()[1] == "解绑":
             unbind(uid)
         elif msg.split()[1] == "测试":
             sign_daily()
