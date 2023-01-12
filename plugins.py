@@ -1,9 +1,15 @@
+import configparser
 import sys
 import ctrl
 
 sys.path.append(sys.path[0] + "/plugins/")
 
-import bot_schedule
+config = configparser.ConfigParser()
+config.read("config.ini")
+main_group = int(config["User"]["main_group"])
+bot_master = config["User"]["master"]
+bot_id = int(config["User"]["bot_id"])
+bot_name = config["User"]["bot_name"]
 
 def menu(msg, gid):
     """菜单"""
@@ -17,7 +23,7 @@ def sudo(msg, uid, gid = 0):
             s = msg.split()
             sgid = (s[1])
             smsg = s[2]
-            sudo_send_gmsg(sgid, smsg)
+            sudo_send_msg(sgid, smsg)
     else:
         pass
 

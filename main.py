@@ -16,49 +16,12 @@ def process_msg(msg):
     try:
         if msg["post_type"] == "meta_event":
             pass
+        elif msg["post_type"] == "requests":
+            event_request(msg)
         elif msg["post_type"] == "notice":
-            if "sub_type" in msg and msg["sub_type"] == "poke" and msg["target_id"] == bot_id: #对机器人发起的拍一拍
-                if msg["sender_id"] == bot_id:
-                    pass
-                uid = msg["sender_id"]
-                if "group_id" not in msg:
-                    ctrl.send("p", uid, ctrl.poke(uid))
-                else:
-                    ctrl.send("g", msg["group_id"], ctrl.poke(uid))
-            elif "sub_type" in msg and msg["sub_type"] == "poke":
-                pass
-            elif msg["notice_type"] == "client_status": #登录状态
-                if msg["online"]: #== True
-                    online = "上线"
-                else:
-                    online = "下线"
-                ctrl.send("p", bot_master, "您的机器人账户状态发生变化:\n类型：" + online + "\n详细信息:" + str(msg["client"]))
-                print("您的机器人账户状态发生变化:\n类型：" + online + "\n详细信息:" + str(msg["client"]))
-            else:
-                ctrl.send("p", bot_master, "这是一个非文本消息：\n" + str(msg))
+            event_notice(msg)
         elif msg["post_type"] == "message":
-                if msg["message_type"] == "private":  #私聊消息
-                    new_msg = msg["message"]
-                    uid = msg["user_id"]
-                    mid = msg["message_id"]
-                    if msg["sub_type"] == "friend":
-                        relation = 1
-                    else:
-                        relation = 0
-                    if all_msg(uid, new_msg) == False:
-                        private_msg(uid, new_msg)
-                    print("收到私聊 来自" + str(uid) + ":" + new_msg)
-                elif msg["message_type"] == "group":  #群消息
-                    new_msg = msg["message"]
-                    gid = msg["group_id"]
-                    uid = msg["user_id"]
-                    mid = msg["message_id"]
-                    role = msg["sender"]["role"]
-                    nickname = msg["sender"]["nickname"]
-                    sex = msg["sender"]["sex"]
-                    if all_msg(uid, new_msg, gid): #== False
-                        group_msg(uid, new_msg, gid, nickname, sex)
-                    print("收到群聊消息 来自群" + str(gid) + "的" + str(uid) + ":" + new_msg + "\n")
+            event_message(msg)
         else:
             ctrl.send("p", bot_master, "无法判断的消息类型：\n" + msg)
     except Exception as error_log:
@@ -68,6 +31,53 @@ def process_msg(msg):
 def read_write(route, content):
     """读写文件"""
     pass
+
+#处理事件
+def event_request(msg):
+    request_type = msg["request_type"]
+
+def event_notice(msg):
+    if "sub_type" in msg and msg["sub_type"] == "poke" and msg["target_id"] == bot_id: #对机器人发起的拍一拍
+                if msg["sender_id"] == bot_id:
+                    pass
+                uid = msg["sender_id"]
+                if "group_id" not in msg:
+                    ctrl.send("p", uid, ctrl.poke(uid))
+                else:
+                    ctrl.send("g", msg["group_id"], ctrl.poke(uid))
+    elif "sub_type" in msg and msg["sub_type"] == "poke":
+        pass
+    elif msg["notice_type"] == "client_status": #登录状态
+        if msg["online"]: #== True
+            online = "上线"
+        else:
+            online = "下线"
+        ctrl.send("p", bot_master, "您的机器人账户状态发生变化:\n类型：" + online + "\n详细信息:" + str(msg["client"]))
+        print("您的机器人账户状态发生变化:\n类型：" + online + "\n详细信息:" + str(msg["client"]))
+
+def event_message(msg):
+    if msg["message_type"] == "private":  #私聊消息
+        new_msg = msg["message"]
+        uid = msg["user_id"]
+        mid = msg["message_id"]
+        if msg["sub_type"] == "friend":
+            relation = 1
+        else:
+            relation = 0
+        if all_msg(uid, new_msg) == False:
+            private_msg(uid, new_msg)
+        print("收到私聊 来自" + str(uid) + ":" + new_msg)
+    elif msg["message_type"] == "group":  #群消息
+        new_msg = msg["message"]
+        gid = msg["group_id"]
+        uid = msg["user_id"]
+        mid = msg["message_id"]
+        role = msg["sender"]["role"]
+        nickname = msg["sender"]["nickname"]
+        sex = msg["sender"]["sex"]
+        if all_msg(uid, new_msg, gid) == False:
+            group_msg(uid, new_msg, gid, nickname, sex)
+        print("收到群聊消息 来自群" + str(gid) + "的" + str(uid) + ":" + new_msg + "\n")
 
 #处理消息
 def all_msg(uid, msg, gid = 0):

@@ -4,7 +4,7 @@ import time
 import threading
 import genshin_sign
 
-schedule.every().day.at("1:20").do(genshin_sign.sign_daily)
+schedule.every().day.at("01:20").do(genshin_sign.sign_daily)
 
 
 def schedule_start():

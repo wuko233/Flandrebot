@@ -1,6 +1,5 @@
 import configparser
 from flask import Flask, request
-import main
 
 
 def config_summon():
@@ -13,7 +12,7 @@ def config_summon():
                    "bot_name": "机器人昵称",
                    "master": "主人QQ",
                    "main_group": "主群号码"}
-    with open("config.ini", "a") as f:
+    with open("/config.ini", "a") as f:
         config.write(f)
     print("初始化完成。")
 
@@ -34,5 +33,7 @@ def post():
     t = request.get_json()
     main.process_msg(t)
     return 'OK'
+
+import main
 
 app.run(host = get_host, port = get_port, debug = debug_mode)

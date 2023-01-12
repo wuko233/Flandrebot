@@ -1,14 +1,20 @@
 import requests
-import json
-import os
 import ctrl
+import configparser
 
-#def __init__():
-#    with open("./config.json", "a") as config:
-#        data = json.loads(config)
-#        if "weather_api_key" not in data:
-#            data["weather_api_key"] = 0
-#            print("[警告]已初始化天气插件，请在config.json中填写weather_api_key！\n获取key方式:和风天气开发者官网")
+def config_summon():
+    config["Weather"] = {"weather_api_key": "获取到的key"}
+    with open("/config.ini", "a") as f:
+        config.write(f)
+    print("初始化完成。")
+
+config = configparser.ConfigParser()
+config.read("config.ini")
+if "Weather" not in config:
+    config_summon()
+    print("已生成天气插件配置文件, 请填写'config.ini'文件中'Weather'。获取key方法：未完待续")
+else:
+    key = config["Weather"]["weather_api_key"]
 
 def handle(uid, msg, gid=0):
         if msg == "天气":
@@ -27,10 +33,10 @@ def handle(uid, msg, gid=0):
                 data = look_up(location, adm)
             except IndexError:
                 data = look_up(location)
-            id = data["id"]
-            if id == 404:
+            data_id = data["id"]
+            if data_id == 404:
                 error(uid, gid, 404)
-            elif id == 200:
+            elif data_id == 200:
                 info = now(data["location_id"])
                 msg = msg.split()[2] +" "+ data["adm1"] +" "+ data["adm2"] + "\n" + info
                 if gid == 0:
