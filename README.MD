@@ -1,5 +1,7 @@
 # Flandre bot
 
+** 因腾讯风控，环境不可用，停止更新。 **
+
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9be0bc5b84414df382bad502adaa8087)](https://www.codacy.com/gh/wuko233/Flandrebot/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wuko233/Flandrebot&amp;utm_campaign=Badge_Grade)
 
 ## 关于
